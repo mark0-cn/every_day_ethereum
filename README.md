@@ -17,12 +17,8 @@ Claude Code slash commands for Ethereum EIP developers. Run `/get-info-zh` or `/
 
 In Claude Code, run:
 ```
-/plugin install every-day-ethereum@mark0-cn
-```
-
-Or add directly from GitHub:
-```
 /plugin marketplace add mark0-cn/every_day_ethereum
+/plugin install every-day-ethereum@mark0-cn
 ```
 
 ### Manual

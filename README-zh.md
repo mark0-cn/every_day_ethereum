@@ -15,14 +15,10 @@
 
 ### 插件市场安装（推荐）
 
-在 Claude Code 中运行：
-```
-/plugin install every-day-ethereum@mark0-cn
-```
-
-或直接从 GitHub 添加：
+在 Claude Code 中依次运行：
 ```
 /plugin marketplace add mark0-cn/every_day_ethereum
+/plugin install every-day-ethereum@mark0-cn
 ```
 
 ### 手动安装
