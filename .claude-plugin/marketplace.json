@@ -12,7 +12,7 @@
     {
       "name": "every-day-ethereum",
       "source": "./",
-      "description": "Generate a daily digest of Ethereum EIP activity, spec changes, toolchain updates and community discussions. Run /get-info-zh for Chinese output or /get-info-en for English output.",
+      "description": "Generate a daily digest of Ethereum EIP activity, spec changes, toolchain updates and community discussions from 19 sources. Use /get-info-zh for Chinese output or /get-info-en for English output.",
       "category": "research",
       "tags": ["ethereum", "eip", "erc", "daily", "digest", "revm", "reth", "alloy", "foundry"]
     }
