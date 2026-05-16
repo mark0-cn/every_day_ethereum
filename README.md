@@ -21,6 +21,18 @@ In Claude Code, run:
 /plugin install every-day-ethereum@mark0-cn
 ```
 
+### Update
+
+```
+/plugin update every-day-ethereum@mark0-cn
+```
+
+If the above doesn't work, re-adding the marketplace will pull the latest version:
+
+```
+/plugin marketplace add mark0-cn/every_day_ethereum
+```
+
 ### Manual
 
 **Project-level** (current project only):

@@ -21,6 +21,18 @@
 /plugin install every-day-ethereum@mark0-cn
 ```
 
+### 更新
+
+```
+/plugin update every-day-ethereum@mark0-cn
+```
+
+如果上述命令不支持，重新 add 一次即可拉取最新版本：
+
+```
+/plugin marketplace add mark0-cn/every_day_ethereum
+```
+
 ### 手动安装
 
 **项目级**（仅在当前项目中可用）：
