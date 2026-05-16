@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Claude Code slash commands for Ethereum EIP developers — daily digest from 19 sources including EIPs, specs, revm, reth, alloy, foundry, Ethereum Magicians, ethresear.ch, and more.",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "plugins": [
     {

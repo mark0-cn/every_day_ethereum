@@ -1,4 +1,4 @@
-# Every Day Ethereum `v0.1.0`
+# Every Day Ethereum `v0.2.0`
 
 **[English](README.md)**
 
@@ -82,6 +82,13 @@ cp commands/get-info-en.md ~/.claude/commands/
 - [L2Beat](https://l2beat.com/) — L2 技术跟踪
 
 ## 版本变动
+
+### v0.2.0 — 2026-05-16
+- 新增启动时 GitHub Token 检查，未配置时提供获取引导和交互式输入
+- 修复 Ethereum Blog RSS 地址（`/en/rss.xml` → `/en/feed.xml`）
+- 修复 Ethereum Cat Herders 域名（`ethereumcatherders.com` → `ethcatherders.com`）
+- Week in Ethereum News 新增 Substack 备用地址（绕过 TLS 证书问题）
+- README 新增更新方式说明
 
 ### v0.1.0 — 2026-05-16
 - 首次发布

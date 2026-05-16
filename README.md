@@ -1,4 +1,4 @@
-# Every Day Ethereum `v0.1.0`
+# Every Day Ethereum `v0.2.0`
 
 **[中文文档](README-zh.md)**
 
@@ -82,6 +82,13 @@ Aggregates from 19 sources across 4 categories:
 - [L2Beat](https://l2beat.com/) — L2 technical tracking
 
 ## Changelog
+
+### v0.2.0 — 2026-05-16
+- Add GitHub Token check at startup with step-by-step guide and interactive prompt
+- Fix Ethereum Blog RSS URL (`/en/rss.xml` → `/en/feed.xml`)
+- Fix Ethereum Cat Herders URL (`ethereumcatherders.com` → `ethcatherders.com`)
+- Add Substack fallback for Week in Ethereum News (TLS issue workaround)
+- Add update instructions to README
 
 ### v0.1.0 — 2026-05-16
 - Initial release
