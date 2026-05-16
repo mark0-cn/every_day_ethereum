@@ -2,6 +2,46 @@ Generate an Ethereum EIP daily digest for the past 24 hours by collecting data f
 
 ---
 
+## Step 0 — GitHub Token Check
+
+Before collecting any data, run:
+
+```bash
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "NOT_SET"
+else
+  echo "SET"
+fi
+```
+
+**If the result is `NOT_SET`**, inform the user:
+
+> ⚠️ **GITHUB_TOKEN not detected**
+>
+> Without a token, the GitHub API limit is **60 requests/hour** — usually not enough for a full digest run.
+>
+> **How to get one (free, takes ~1 minute):**
+> 1. Go to https://github.com/settings/tokens/new
+> 2. Set any Note (e.g. `every-day-ethereum`)
+> 3. Set Expiration to "No expiration" or a custom date
+> 4. **No scopes needed** — public repos require no permissions
+> 5. Click "Generate token" and copy it
+>
+> **How to set it:**
+> ```bash
+> export GITHUB_TOKEN=your_token_here
+> ```
+>
+> Would you like to enter your token now? Paste it below (or type `skip` to continue with the anonymous rate limit):
+
+Wait for the user's response:
+- If the user pastes a token string (starts with `ghp_` or `github_pat_`), run `export GITHUB_TOKEN=<token>` and confirm "✅ Token set. Starting data collection."
+- If the user types `skip` or anything else, proceed without a token and note that GitHub data may be incomplete.
+
+**If the result is `SET`**, silently continue to data collection.
+
+---
+
 ## Data Collection
 
 Run all steps below. If a source is unavailable, note it and continue.
