@@ -234,7 +234,7 @@ If the page requires JavaScript and returns empty, note it.
 ### 13. Ethereum Blog
 
 Use the WebFetch tool to retrieve:
-- `https://blog.ethereum.org/en/rss.xml`
+- `https://blog.ethereum.org/en/feed.xml`
 
 List any posts published within the past 24 hours. If RSS unavailable, fetch `https://blog.ethereum.org/` directly.
 
@@ -255,14 +255,17 @@ Check for any new posts in the past 7 days. If a new post exists, fetch its cont
 ### 16. Ethereum Cat Herders
 
 Use the WebFetch tool to retrieve:
-- `https://www.ethereumcatherders.com/`
+- `https://www.ethcatherders.com/`
 
 Look for new meeting notes, EIP process updates, or community calls published in the past 7 days.
 
 ### 17. Week in Ethereum News
 
 Use the WebFetch tool to retrieve:
-- `https://weekinethereumnews.com/`
+- `https://weekinethereumnews.com/week-in-ethereum-news/`
+
+If that fails due to TLS errors, try:
+- `https://weekinethereumnews.substack.com/`
 
 This is a weekly newsletter. Check if a new issue was published this week and extract the top EIP-relevant headlines.
 
