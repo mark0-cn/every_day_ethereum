@@ -2,32 +2,46 @@ Generate an Ethereum EIP daily digest for the past 24 hours by collecting data f
 
 ---
 
-## Step 0 — GitHub Token Check
+## Step 0 — GitHub Auth Check
 
 Before collecting any data, run:
 
 ```bash
-if [ -z "$GITHUB_TOKEN" ]; then
-  echo "NOT_SET"
+# Priority 1: gh CLI
+if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+  echo "GH_CLI"
+# Priority 2: GITHUB_TOKEN env var
+elif [ -n "$GITHUB_TOKEN" ]; then
+  echo "TOKEN"
 else
-  echo "SET"
+  echo "NONE"
 fi
 ```
 
-**If the result is `NOT_SET`**, inform the user:
+**If the result is `GH_CLI`**: use `gh api <path>` for all GitHub requests instead of `curl`. Example:
+```bash
+gh api /repos/ethereum/EIPs/pulls?state=all&sort=updated&direction=desc&per_page=30
+```
+Silently continue to data collection.
 
-> ⚠️ **GITHUB_TOKEN not detected**
+**If the result is `TOKEN`**: use `curl` with `-H "Authorization: Bearer $GITHUB_TOKEN"` for all GitHub requests. Silently continue to data collection.
+
+**If the result is `NONE`**, inform the user:
+
+> ⚠️ **No GitHub authentication detected**
 >
-> Without a token, the GitHub API limit is **60 requests/hour** — usually not enough for a full digest run.
+> Without auth, the GitHub API limit is **60 requests/hour** — usually not enough for a full digest run.
 >
-> **How to get one (free, takes ~1 minute):**
+> **Option 1: GitHub CLI (recommended if already installed)**
+> ```bash
+> gh auth login
+> ```
+>
+> **Option 2: Personal Access Token**
 > 1. Go to https://github.com/settings/tokens/new
 > 2. Set any Note (e.g. `every-day-ethereum`)
-> 3. Set Expiration to "No expiration" or a custom date
-> 4. **No scopes needed** — public repos require no permissions
-> 5. Click "Generate token" and copy it
->
-> **How to set it:**
+> 3. Set Expiration as needed — **no scopes required**
+> 4. Generate, copy, then run:
 > ```bash
 > export GITHUB_TOKEN=your_token_here
 > ```
@@ -35,16 +49,18 @@ fi
 > Would you like to enter your token now? Paste it below (or type `skip` to continue with the anonymous rate limit):
 
 Wait for the user's response:
-- If the user pastes a token string (starts with `ghp_` or `github_pat_`), run `export GITHUB_TOKEN=<token>` and confirm "✅ Token set. Starting data collection."
-- If the user types `skip` or anything else, proceed without a token and note that GitHub data may be incomplete.
-
-**If the result is `SET`**, silently continue to data collection.
+- If the user pastes a token (starts with `ghp_` or `github_pat_`), run `export GITHUB_TOKEN=<token>` and confirm "✅ Token set. Starting data collection."
+- If the user types `skip` or anything else, proceed with anonymous rate limit and note GitHub data may be incomplete.
 
 ---
 
 ## Data Collection
 
 Run all steps below. If a source is unavailable, note it and continue.
+
+For all GitHub API calls, use the auth method detected in Step 0:
+- `GH_CLI`: replace `curl -s "https://api.github.com/ENDPOINT" -H "Accept: application/vnd.github+json" $AUTH` with `gh api ENDPOINT`
+- `TOKEN` or `NONE`: use curl as written
 
 ### 1. ethereum/EIPs — PR & Issue activity
 

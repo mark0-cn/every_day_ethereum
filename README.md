@@ -1,4 +1,4 @@
-# Every Day Ethereum `v0.2.0`
+# Every Day Ethereum `v0.3.0`
 
 **[中文文档](README-zh.md)**
 
@@ -82,6 +82,10 @@ Aggregates from 19 sources across 4 categories:
 - [L2Beat](https://l2beat.com/) — L2 technical tracking
 
 ## Changelog
+
+### v0.3.0 — 2026-05-18
+- Support `gh` CLI as authentication method (takes priority over GITHUB_TOKEN)
+- Auth check order: gh CLI → GITHUB_TOKEN → prompt user
 
 ### v0.2.0 — 2026-05-16
 - Add GitHub Token check at startup with step-by-step guide and interactive prompt

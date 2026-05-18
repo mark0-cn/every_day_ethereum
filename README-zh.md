@@ -1,4 +1,4 @@
-# Every Day Ethereum `v0.2.0`
+# Every Day Ethereum `v0.3.0`
 
 **[English](README.md)**
 
@@ -82,6 +82,10 @@ cp commands/get-info-en.md ~/.claude/commands/
 - [L2Beat](https://l2beat.com/) — L2 技术跟踪
 
 ## 版本变动
+
+### v0.3.0 — 2026-05-18
+- 支持 `gh` CLI 作为认证方式（优先级高于 GITHUB_TOKEN）
+- 认证检测顺序：gh CLI → GITHUB_TOKEN → 提示用户输入
 
 ### v0.2.0 — 2026-05-16
 - 新增启动时 GitHub Token 检查，未配置时提供获取引导和交互式输入

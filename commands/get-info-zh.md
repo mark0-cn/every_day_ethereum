@@ -2,32 +2,46 @@ Generate an Ethereum EIP daily digest for the past 24 hours by collecting data f
 
 ---
 
-## Step 0 — GitHub Token Check
+## Step 0 — GitHub Auth Check
 
 Before collecting any data, run:
 
 ```bash
-if [ -z "$GITHUB_TOKEN" ]; then
-  echo "NOT_SET"
+# Priority 1: gh CLI
+if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+  echo "GH_CLI"
+# Priority 2: GITHUB_TOKEN env var
+elif [ -n "$GITHUB_TOKEN" ]; then
+  echo "TOKEN"
 else
-  echo "SET"
+  echo "NONE"
 fi
 ```
 
-**If the result is `NOT_SET`**, inform the user in Chinese:
+**If the result is `GH_CLI`**: use `gh api <path>` for all GitHub requests instead of `curl`. Example:
+```bash
+gh api /repos/ethereum/EIPs/pulls?state=all&sort=updated&direction=desc&per_page=30
+```
+Silently continue to data collection.
 
-> ⚠️ **未检测到 GITHUB_TOKEN**
+**If the result is `TOKEN`**: use `curl` with `-H "Authorization: Bearer $GITHUB_TOKEN"` for all GitHub requests. Silently continue to data collection.
+
+**If the result is `NONE`**, inform the user in Chinese:
+
+> ⚠️ **未检测到 GitHub 认证**
 >
-> 没有 Token 时，GitHub API 限额为 **60 次/小时**，通常不够完成一次完整日报。
+> 没有认证时，GitHub API 限额为 **60 次/小时**，通常不够完成一次完整日报。
 >
-> **获取方式（免费，1 分钟完成）：**
+> **方式一：使用 GitHub CLI（推荐，已安装则直接登录）**
+> ```bash
+> gh auth login
+> ```
+>
+> **方式二：使用 Personal Access Token**
 > 1. 打开 https://github.com/settings/tokens/new
 > 2. Note 填写任意名称（如 `every-day-ethereum`）
-> 3. Expiration 选择 No expiration 或自定义
-> 4. **不需要勾选任何权限**（公开仓库无需额外权限）
-> 5. 点击 Generate token，复制生成的 token
->
-> **设置方式：**
+> 3. Expiration 按需设置，**无需勾选任何权限**
+> 4. 生成后复制，然后运行：
 > ```bash
 > export GITHUB_TOKEN=your_token_here
 > ```
@@ -35,16 +49,18 @@ fi
 > 是否现在输入 Token？请直接粘贴（或输入 `skip` 跳过，使用匿名限额继续）：
 
 Wait for the user's response:
-- If the user pastes a token string (starts with `ghp_` or `github_pat_`), run `export GITHUB_TOKEN=<token>` and confirm "✅ Token 已设置，开始采集数据。"
-- If the user types `skip` or anything else, proceed without a token and note that GitHub data may be incomplete.
-
-**If the result is `SET`**, silently continue to data collection.
+- If the user pastes a token (starts with `ghp_` or `github_pat_`), run `export GITHUB_TOKEN=<token>` and confirm "✅ Token 已设置，开始采集数据。"
+- If the user types `skip` or anything else, proceed with anonymous rate limit and note GitHub data may be incomplete.
 
 ---
 
 ## Data Collection
 
 Run all steps below. If a source is unavailable, note it and continue.
+
+For all GitHub API calls, use the auth method detected in Step 0:
+- `GH_CLI`: replace `curl -s "https://api.github.com/ENDPOINT" -H "Accept: application/vnd.github+json" $AUTH` with `gh api ENDPOINT`
+- `TOKEN` or `NONE`: use curl as written
 
 ### 1. ethereum/EIPs — PR & Issue activity
 
